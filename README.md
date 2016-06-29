@@ -42,7 +42,7 @@ You have a new Heroku app, it's live, in the cloud, and free as long as it's run
 
 It should work to render the HTML, but you will be missing some functionality, such as being able to Dial an external number.
 
-![TwilioClient](http://uploadir.com/u/udmp7g31 "Twilio Client")
+![TwilioClient](https://uploadir.com/u/qy39txbt "Twilio Client")
 
 
 
@@ -58,7 +58,7 @@ Take your new Heroku URL (for example http://funky-monkey-567.herokuapp.com) and
 
 * Twilio App Voice Request URL: http://funky-monkey-567.herokuapp.com/voice. This is the action that will be called when a user presses the Dial button on the webpage.  
 
-![TwimlApp](https://uploadir.com/u/qy39txbt "TwimlApp")
+![TwimlApp](http://uploadir.com/u/ee82e4sm "TwimlApp")
 
 
 ## BLAM BLAM!  
