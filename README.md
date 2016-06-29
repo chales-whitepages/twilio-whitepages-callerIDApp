@@ -58,7 +58,7 @@ Take your new Heroku URL (for example http://funky-monkey-567.herokuapp.com) and
 
 * Twilio App Voice Request URL: http://funky-monkey-567.herokuapp.com/voice. This is the action that will be called when a user presses the Dial button on the webpage.  
 
-![TwimlApp](http://uploadir.com/u/ee82e4sm "TwimlApp")
+![TwimlApp](https://uploadir.com/u/qy39txbt "TwimlApp")
 
 
 ## BLAM BLAM!  
