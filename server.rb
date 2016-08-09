@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'twilio-ruby'
-require 'faker'
-
 
 disable :protection
 
@@ -35,16 +33,12 @@ end
 get '/token' do
   # Get the user-provided ID for the connecting device
   device_id = params['device']
-
   # Create a random username for the client
-  identity = Faker::Internet.user_name
-
+  identity = 'twilioTest'
   # Create a unique ID for the currently connecting device
   endpoint_id = "TwilioDemoApp:#{identity}:#{device_id}"
-
   # Create an Access Token for the app
   token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600, identity
-
   # Create app grant for out token
   grant = Twilio::Util::AccessToken::SyncGrant.new
   grant.service_sid = sync_sid
