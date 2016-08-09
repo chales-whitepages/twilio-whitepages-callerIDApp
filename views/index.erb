@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>White Pages CallerId</title>
+    <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
     <script type="text/javascript"
       src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
     <script type="text/javascript"
@@ -39,12 +40,11 @@
     // Using a sync doc for the synchronisation primitive, could use a list to
     // keep the call log info.
     var syncDoc;
-
     // Get an access token for the client, passing a device ID, only one device ID
-    // is needed for this but multiple tabs would need their own device IDs
     $.getJSON('/token', {
       device: getDeviceID()
     }, function(tokenResponse) {
+      console.log(tokenResponse.token);
       // Initialize the Sync client
       accessManager = new Twilio.accessManager(tokenResponse.token);
       syncClient = new Twilio.Sync.Client(accessManager);
@@ -53,11 +53,10 @@
       syncClient.document('TwilioChannel').then(function(doc) {
         syncDoc = doc;
         data = syncDoc.get();
+        console.log(data);
         buildCaller(callerProfile, data);
-
-        syncDoc.on("updated", buildCaller(callerProfile));
         $("#log").text("Call from: " + callerProfile.name);
-        
+
       });
     });
 
