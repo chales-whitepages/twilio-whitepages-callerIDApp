@@ -33,7 +33,6 @@ end
 get '/token' do
   # Get the user-provided ID for the connecting device
   puts "In token"
-  device_id = 'hi'
   device_id = params['device']
   puts device_id
   puts "Received token"
