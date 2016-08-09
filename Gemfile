@@ -1,5 +1,3 @@
 source 'http://rubygems.org'
-gem 'faker'
 gem 'sinatra'
-gem 'sinatra-contrib'
-gemspec :path => 'twilio-ruby'
+gem 'twilio-ruby'
