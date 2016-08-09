@@ -1,9 +1,7 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/json'
 require 'twilio-ruby'
-require 'dotenv'
-require 'faker'
+
 
 disable :protection
 
