@@ -42,7 +42,7 @@
     var syncDoc;
     // Get an access token for the client, passing a device ID, only one device ID
     $.getJSON('/token', {
-      device: getDeviceID()
+      device: '12345'
     }, function(tokenResponse) {
       console.log(tokenResponse.token);
       // Initialize the Sync client
