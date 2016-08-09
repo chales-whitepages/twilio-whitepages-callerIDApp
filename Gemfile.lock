@@ -41,7 +41,6 @@ PLATFORMS
 DEPENDENCIES
   sinatra
   twilio-ruby
-  multipart-post
 
 BUNDLED WITH
    1.12.5
