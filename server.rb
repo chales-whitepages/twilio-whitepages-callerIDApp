@@ -1,6 +1,8 @@
+require_relative 'twilio-ruby/lib/twilio-ruby.rb'
 require 'rubygems'
 require 'sinatra'
-require 'twilio-ruby'
+require 'sinatra/json'
+require 'faker'
 
 disable :protection
 
@@ -33,7 +35,6 @@ end
 get '/token' do
   # Get the user-provided ID for the connecting device
   puts "In token"
-  device_id = 'hi'
   device_id = params['device']
   puts device_id
   puts "Received token"
