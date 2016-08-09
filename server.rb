@@ -32,19 +32,24 @@ end
 # Generate a token for use in our app
 get '/token' do
   # Get the user-provided ID for the connecting device
+  puts "In token"
   device_id = params['device']
+  puts "Received token"
   # Create a random username for the client
   identity = 'twilioTest'
   # Create a unique ID for the currently connecting device
   endpoint_id = "TwilioDemoApp:#{identity}:#{device_id}"
   # Create an Access Token for the app
+  puts "Created endpoint ID"
   token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600, identity
   # Create app grant for out token
+  puts "token created"
   grant = Twilio::Util::AccessToken::SyncGrant.new
+  puts "Grant created"
   grant.service_sid = sync_sid
   grant.endpoint_id = endpoint_id
   token.add_grant grant
-
+  
   # Generate the token and send to the client
   json :identity => identity, :token => token.to_jwt
 end
