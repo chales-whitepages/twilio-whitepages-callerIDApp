@@ -36,7 +36,7 @@ get '/token' do
   # Get the user-provided ID for the connecting device
   puts "In token"
   device_id = params['device']
-  puts device_if
+  puts device_id
   puts "Received token"
   # Create a random username for the client
   identity = 'twilioTest'
