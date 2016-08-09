@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 gem 'dotenv'
 gem 'faker'
-gem 'rubygems'
 gem 'sinatra'
 gem 'twilio-ruby'
