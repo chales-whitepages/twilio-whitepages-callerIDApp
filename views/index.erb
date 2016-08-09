@@ -31,7 +31,7 @@
       city: "",
       postal_code: "",
     }
-
+    var data
     // Manages the state of our access token obtianed from the server
     var accessManager;
     // Our interface to the Sync Service
@@ -51,26 +51,14 @@
 
       // Create and/or open a Sync document
       syncClient.document('TwilioChannel').then(function(doc) {
-        doc.on("updated", function(data))
         syncDoc = doc;
+        data = syncDoc.get();
+        buildCaller(callerProfile, data);
 
-        data = jQuery.parseJSON(syncDoc.get)
+        syncDoc.on("updated", buildCaller(callerProfile));
+        $("#log").text("Call from: " + callerProfile.name);
+        
       });
-    });
-
-
-    var pusher = new Pusher( '<%=ENV['pusher_key']%>', {
-      encrypted: true
-    });
-
-    // Connects to the web socket set up by the server.
-    var channel = pusher.subscribe('twilio_channel');
-
-    // Listens for the 'event' and works with the incoming data.
-    channel.bind('my_event', function(data){
-      data = jQuery.parseJSON(data.message);
-      buildCaller(callerProfile, data)
-      $("#log").text("Call from: " + callerProfile.name);
     });
 
     // Create the Client with a capability token.
