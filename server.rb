@@ -1,8 +1,9 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/json'
 require 'twilio-ruby'
-require 'httparty'
-require 'pusher'
+require 'dotenv'
+require 'faker'
 
 disable :protection
 
@@ -13,14 +14,9 @@ caller_id   = ENV['twilio_caller_id']
 account_sid = ENV['twilio_account_sid']
 auth_token  = ENV['twilio_auth_token']
 appsid      = ENV['twilio_app_id']
-
-# Setting up the web socket client
-pusher_client = Pusher::Client.new(
-  app_id: ENV['pusher_app_id'],
-  key: ENV['pusher_key'],
-  secret: ENV['pusher_secret'],
-  encrypted: true
-)
+api_key     = ENV['twilio_api_key']
+api_secret  = ENV['twilio_api_secret']
+sync_sid    = ENV['twilio_sync_service_sid']
 
 get '/' do
     client_name = params[:client]
@@ -34,6 +30,30 @@ get '/' do
     capability.allow_client_incoming client_name
     token = capability.generate
     erb :index, :locals => {:token => token, :client_name => client_name, :caller_id=> caller_id}
+end
+
+# Generate a token for use in our app
+get '/token' do
+  # Get the user-provided ID for the connecting device
+  device_id = params['device']
+
+  # Create a random username for the client
+  identity = Faker::Internet.user_name
+
+  # Create a unique ID for the currently connecting device
+  endpoint_id = "TwilioDemoApp:#{identity}:#{device_id}"
+
+  # Create an Access Token for the app
+  token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600, identity
+
+  # Create app grant for out token
+  grant = Twilio::Util::AccessToken::SyncGrant.new
+  grant.service_sid = sync_sid
+  grant.endpoint_id = endpoint_id
+  token.add_grant grant
+
+  # Generate the token and send to the client
+  json :identity => identity, :token => token.to_jwt
 end
 
 post '/dial' do
@@ -60,10 +80,14 @@ end
 #for inbound calls, dial the default_client
 post '/inbound' do
 
-    from = params[:From]
+    from = params[:From]=
     addOnData = params[:AddOns]
+    client = Twilio::REST::Client.new(account_sid, auth_token)
     # Sending the add on data through the web socket
-    pusher_client.trigger('twilio_channel', 'my_event', { message: addOnData })
+    service = client.preview.sync.services('sync_sid')
+    response = service.documents.create(
+      unique_name: "TwilioChannel",
+      data: addOnData)
     # Dials the default_client
     response = Twilio::TwiML::Response.new do |r|
         # Should be your Twilio Number or a verified Caller ID

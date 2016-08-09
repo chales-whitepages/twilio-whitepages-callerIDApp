@@ -5,12 +5,10 @@
     <script type="text/javascript"
       src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
     <script type="text/javascript"
+      src="https://media.twiliocdn.com/sdk/js/sync/v0.2/twilio-sync.min.js"></script>
+    <script type="text/javascript"
       src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
     </script>
-
-    <script type="text/javascript"
-      src="https://js.pusher.com/3.1/pusher.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 
     <link href="css/client.css"
@@ -21,7 +19,7 @@
 
     <script type="text/javascript">
 
-    var globalConn; //stores live connection
+    var globalConn; // Stores live connection
     // Stores the Addon Data
     var callerProfile = {
       number: "",
@@ -34,33 +32,66 @@
       postal_code: "",
     }
 
+    // Manages the state of our access token obtianed from the server
+    var accessManager;
+    // Our interface to the Sync Service
+    var syncClient;
+    // Using a sync doc for the synchronisation primitive, could use a list to
+    // keep the call log info.
+    var syncDoc;
+
+    // Get an access token for the client, passing a device ID, only one device ID
+    // is needed for this but multiple tabs would need their own device IDs
+    $.getJSON('/token', {
+      device: getDeviceID()
+    }, function(tokenResponse) {
+      // Initialize the Sync client
+      accessManager = new Twilio.accessManager(tokenResponse.token);
+      syncClient = new Twilio.Sync.Client(accessManager);
+
+      // Create and/or open a Sync document
+      syncClient.document('TwilioChannel').then(function(doc) {
+        doc.on("updated", function(data))
+        syncDoc = doc;
+
+        data = jQuery.parseJSON(syncDoc.get)
+      });
+    });
+
+
     var pusher = new Pusher( '<%=ENV['pusher_key']%>', {
       encrypted: true
     });
 
     // Connects to the web socket set up by the server.
     var channel = pusher.subscribe('twilio_channel');
-    // Looks for the 'event' and works with the incoming data
+
+    // Listens for the 'event' and works with the incoming data.
     channel.bind('my_event', function(data){
       data = jQuery.parseJSON(data.message);
       buildCaller(callerProfile, data)
       $("#log").text("Call from: " + callerProfile.name);
     });
 
+    // Create the Client with a capability token.
     Twilio.Device.setup("<%= token %>", {debug: false});
 
+    // Let us know when the client is ready.
     Twilio.Device.ready(function (device) {
       $("#log").text("Ready");
     });
 
+    // Report an errors on the screen.
     Twilio.Device.error(function (error) {
       $("#log").text("Error: " + error.message);
     });
 
+    // Estabilish a connection with the call.
     Twilio.Device.connect(function (conn) {
       $("#log").text("On call with: " + callerProfile.name);
     });
 
+    // Message when a call disconnects
     Twilio.Device.disconnect(function (conn) {
       $("#log").text("Call ended");
       $(".script-template-container").hide();
@@ -71,6 +102,7 @@
       $(".script-template-container").hide();
     });
 
+    // Listens for incoming connections
     Twilio.Device.incoming(function (conn) {
         // set the globalConn
       globalConn = conn;
@@ -110,6 +142,17 @@
     }
 
     function addcaller() {
+    }
+
+    //Generate random UUID to identify this browser tab
+    //For a more robust solution consider a library like
+    //fingerprintjs2: https://github.com/Valve/fingerprintjs2
+    function getDeviceId() {
+      return 'browser-' +
+        'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+          return v.toString(16);
+        });
     }
 
     // Parsing the JSON response into individual variables
