@@ -1,8 +1,8 @@
-require_relative 'twilio-ruby/lib/twilio-ruby.rb'
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/json'
 require 'faker'
+require 'twilio-ruby'
 
 disable :protection
 
