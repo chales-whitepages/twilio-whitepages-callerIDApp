@@ -34,6 +34,7 @@ get '/token' do
   # Get the user-provided ID for the connecting device
   puts "In token"
   device_id = params['device']
+  puts device_id
   puts "Received token"
   # Create a random username for the client
   identity = 'twilioTest'
@@ -49,7 +50,7 @@ get '/token' do
   grant.service_sid = sync_sid
   grant.endpoint_id = endpoint_id
   token.add_grant grant
-  
+
   # Generate the token and send to the client
   json :identity => identity, :token => token.to_jwt
 end
