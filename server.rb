@@ -34,13 +34,15 @@ get '/token' do
   # Get the user-provided ID for the connecting device
   puts "In token"
   device_id = params['device']
-  puts "Received token, " device_if
+  puts "Received token"
+  puts device_if
   # Create a random username for the client
   identity = 'twilioTest'
   # Create a unique ID for the currently connecting device
   endpoint_id = "TwilioDemoApp:#{identity}:#{device_id}"
   # Create an Access Token for the app
-  puts "Created endpoint ID, " endpoint_id
+  puts "Created endpoint ID"
+  puts endpoint_id
   token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, identity
   # Create app grant for out token
   puts "token created"
