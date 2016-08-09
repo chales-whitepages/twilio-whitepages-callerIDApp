@@ -43,7 +43,7 @@ get '/token' do
   # Create an Access Token for the app
   puts "Created endpoint ID"
   puts endpoint_id
-  token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, identity
+  token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600, identity
   # Create app grant for out token
   puts "token created"
   grant = Twilio::Util::AccessToken::SyncGrant.new
