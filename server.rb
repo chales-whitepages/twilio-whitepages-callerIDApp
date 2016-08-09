@@ -15,7 +15,7 @@ api_key     = ENV['twilio_api_key']
 api_secret  = ENV['twilio_api_secret']
 sync_sid    = ENV['twilio_sync_service_sid']
 
-=begin
+
 get '/' do
     client_name = params[:client]
     if client_name.nil?
@@ -29,7 +29,6 @@ get '/' do
     token = capability.generate
     erb :index, :locals => {:token => token, :client_name => client_name, :caller_id=> caller_id}
 end
-=end
 
 # Generate a token for use in our app
 get '/token' do
