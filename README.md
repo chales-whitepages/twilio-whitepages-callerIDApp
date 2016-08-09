@@ -42,7 +42,7 @@ You have a new Heroku app, it's live, in the cloud, and free as long as it's run
 
 It should work to render the HTML, but you will be missing some functionality, such as being able to Dial an external number.
 
-![TwilioClient](http://uploadir.com/u/udmp7g31 "Twilio Client")
+![TwilioClient](https://uploadir.com/u/qy39txbt "Twilio Client")
 
 
 
