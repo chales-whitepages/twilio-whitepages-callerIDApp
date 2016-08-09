@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require 'twilio-ruby'
+require_relative 'twilio-ruby/lib/twilio-ruby.rb'
 
 disable :protection
 
@@ -43,6 +43,7 @@ get '/token' do
   # Create an Access Token for the app
   puts endpoint_id
   token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600
+  token.identity = identity
   # Create app grant for out token
   puts "token created"
   grant = Twilio::Util::AccessToken::SyncGrant.new

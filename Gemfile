@@ -1,3 +1,3 @@
 source 'http://rubygems.org'
 gem 'sinatra'
-gem 'twilio-ruby'
+gemspec :path => 'twilio-ruby'
