@@ -25,7 +25,6 @@ PLATFORMS
 DEPENDENCIES
   sinatra
   twilio-ruby
-  fakeweb
 
 BUNDLED WITH
    1.12.5
