@@ -1,5 +1,5 @@
 PATH
-  remote .
+  remote: .
   specs:
     twilio-ruby (5.0.0.rc4)
       activesupport (~> 4.2)
