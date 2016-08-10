@@ -29,6 +29,8 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rack-test (0.6.3)
+      rack (>= 1.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -52,7 +54,6 @@ DEPENDENCIES
   bundler (~> 1.5)
   sinatra
   sinatra-contrib
-  rack-test
   twilio-ruby!
 
 BUNDLED WITH
