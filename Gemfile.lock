@@ -52,6 +52,7 @@ DEPENDENCIES
   bundler (~> 1.5)
   sinatra
   sinatra-contrib
+  rack-test
   twilio-ruby!
 
 BUNDLED WITH
