@@ -85,11 +85,12 @@ post '/inbound' do
     client = Twilio::REST::Client.new(account_sid, auth_token)
     # Sending the add on data through the web socket
     service = client.preview.sync.services(sync_sid)
-    puts sync_sid
-    response2 = service.documents.create(
-      unique_name: "TwilioChannel",
-      data: '{ "Test": "Still Testing" }' )
-    puts response2
+    #puts sync_sid
+
+    #response2 = service.documents.create(
+    #  unique_name: "TwilioChannel",
+    #  data: '{ "Test": "Still Testing" }' )
+    #puts response2
     response2 = service.documents("TwilioChannel").update(data: '{ "date_updated": "2016-07-06T15:46:38Z",
       "movie_title": "On The Line",
       "showtimes": null,
