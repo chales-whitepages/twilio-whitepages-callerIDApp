@@ -44,7 +44,6 @@
     $.getJSON('/token', {
       device: 'test1234'
     }, function(tokenResponse) {
-      console.log(tokenResponse.token);
       // Initialize the Sync client
       accessManager = new Twilio.AccessManager(tokenResponse.token);
       syncClient = new Twilio.Sync.Client(accessManager);
@@ -54,6 +53,8 @@
         syncDoc = doc;
         data = syncDoc.get();
         console.log(data);
+        console.log(data.addOnData);
+
         buildCaller(callerProfile, data);
         $("#log").text("Call from: " + callerProfile.name);
 
