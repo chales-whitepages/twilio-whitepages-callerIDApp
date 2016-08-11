@@ -87,7 +87,8 @@ post '/inbound' do
     service = client.preview.sync.services(sync_sid)
     puts sync_sid
     response2 = service.documents.create(
-      unique_name: "TwilioChannel")
+      unique_name: "TwilioChannel"
+      data: '{ "Test": "Still Testing" }' )
     puts response2
     # Dials the default_client
     response = Twilio::TwiML::Response.new do |r|
