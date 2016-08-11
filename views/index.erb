@@ -46,7 +46,7 @@
     }, function(tokenResponse) {
       console.log(tokenResponse.token);
       // Initialize the Sync client
-      accessManager = new Twilio.accessManager(tokenResponse.token);
+      accessManager = new Twilio.AccessManager(tokenResponse.token);
       syncClient = new Twilio.Sync.Client(accessManager);
 
       // Create and/or open a Sync document
