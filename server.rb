@@ -51,7 +51,12 @@ get '/token' do
   grant.service_sid = sync_sid
   grant.endpoint_id = endpoint_id
   token.add_grant grant
-
+  # Setting Up the Sync Doc
+  service = client.preview.sync.services(sync_sid)
+  puts sync_sid
+  puts service
+  response2 = service.documents.create(unique_name: "TwilioChannel")
+  puts response2
   # Generate the token and send to the client
   json :identity => identity, :token => token.to_jwt
 end
@@ -85,9 +90,7 @@ post '/inbound' do
     client = Twilio::REST::Client.new(account_sid, auth_token)
     # Sending the add on data through the web socket
     service = client.preview.sync.services(sync_sid)
-    puts sync_sid
-    response2 = service.documents.create(
-      unique_name: "TwilioChannel", data: addOnData)
+    response2 = service.documents("TwilioChannel").update(data: addOnData)
     puts response2
     # Dials the default_client
     response = Twilio::TwiML::Response.new do |r|
