@@ -80,14 +80,14 @@ end
 #for inbound calls, dial the default_client
 post '/inbound' do
 
-    from = params[:From]=
+    from = params[:From]
     addOnData = params[:AddOns]
     client = Twilio::REST::Client.new(account_sid, auth_token)
     # Sending the add on data through the web socket
     service = client.preview.sync.services(sync_sid)
     puts sync_sid
     response2 = service.documents.create(
-      unique_name: "TwilioChannel", data: addOnData)
+      unique_name: "TwilioChannel")
     puts response2
     # Dials the default_client
     response = Twilio::TwiML::Response.new do |r|
