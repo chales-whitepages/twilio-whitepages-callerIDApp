@@ -91,11 +91,7 @@ post '/inbound' do
     #  unique_name: "TwilioChannel",
     #  data: '{ "Test": "Still Testing" }' )
     #puts response2
-    response2 = service.documents("TwilioChannel").update(data: '{ "date_updated": "2016-07-06T15:46:38Z",
-      "movie_title": "On The Line",
-      "showtimes": null,
-      "starring": ["Lance Bass", "Joey Fatone"],
-      "genre": "Romance"}')
+    response2 = service.documents("TwilioChannel").update(data: addOnData)
     # Dials the default_client
     response = Twilio::TwiML::Response.new do |r|
         # Should be your Twilio Number or a verified Caller ID
