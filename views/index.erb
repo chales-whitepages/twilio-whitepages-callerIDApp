@@ -53,8 +53,8 @@
         syncDoc = doc;
         data = syncDoc.get();
         console.log(data);
-        console.log(data.addOnData);
-        console.log(data.data.addOnData);
+        console.log(data.results);
+        console.log(data.results.whitepages_pro_caller_id);
         buildCaller(callerProfile, data);
         $("#log").text("Call from: " + callerProfile.name);
 
