@@ -49,16 +49,6 @@
       syncClient = new Twilio.Sync.Client(accessManager);
 
       // Create and/or open a Sync document
-      syncClient.document('TwilioChannel').then(function(doc) {
-        syncDoc = doc;
-        data = syncDoc.get();
-        console.log(data);
-        console.log(data.results);
-        console.log(data.results.whitepages_pro_caller_id);
-        buildCaller(callerProfile, data);
-        $("#log").text("Call from: " + callerProfile.name);
-
-      });
     });
 
     // Create the Client with a capability token.
@@ -94,7 +84,11 @@
     Twilio.Device.incoming(function (conn) {
         // set the globalConn
       globalConn = conn;
-
+      syncClient.document('TwilioChannel').then(function(doc) {
+        syncDoc = doc;
+        data = syncDoc.get();
+        buildCaller(callerProfile, data);
+      });
       $("#log").text("Call from: " + callerProfile.name);
       showCaller(callerProfile);
 
