@@ -92,12 +92,11 @@
     Twilio.Device.incoming(function (conn) {
         // set the globalConn
       globalConn = conn;
-
+      // Show the caller id info
       $("#log").text("Call from: " + callerProfile.name);
       showCaller(callerProfile);
-      // Show the caller id info
+      // Add to call log
       $("<li>", {id: conn.Id, text: callerProfile.name}).click(function () {
-        showCaller(callerProfile);
       }).prependTo("#people");
     });
 
@@ -181,7 +180,7 @@
 
     <script type="text/x-handlebars-template" id="template">
       <div class='caller_profile'>
-        <div class="caller_profile_vcard vcard" style="background-image:url('//maps.googleapis.com/maps/api/staticmap?zoom=12&size=600x300&sensor=false&center={{city}},{{state}}.png')">
+        <div class="caller_profile_vcard vcard" style="background-image:url('//maps.googleapis.com/maps/api/staticmap?zoom=12&size=600x300&sensor=false&center={{address}},{{city}},{{state}}.png')">
          <div class="caller_profile_text">
            <p><label class="caller_profile_label">Number:</label>   <span class="fn editable" id="profile_edit_name">{{number}}</span></p>
            <p><label class="caller_profile_label">Name:</label>   <span class="fn editable" id="profile_edit_name">{{name}}</span></p>
