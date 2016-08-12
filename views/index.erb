@@ -97,6 +97,7 @@
       showCaller(callerProfile);
       // Add to call log
       $("<li>", {id: conn.Id, text: callerProfile.name}).click(function () {
+        showCaller(callerProfile);
       }).prependTo("#people");
     });
 
