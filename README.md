@@ -26,6 +26,20 @@ You will need these after pressing the Deploy to Heroku button, so we will prepa
 	  - Press the "Create Twiml App" button.  Give your App a Friendly Name, such as "Hello Monkey". We will fill out the Voice URL later, after pressing the Heroku button.  
 		- After creating the Twiml App, note the App Sid (need to click on the name of the Twiml App to see the Application Sid).
 
+## Temporary: Generating a Service Instance
+
+		https://www.twilio.com/docs/api/sync/rest/services
+
+		During the Sync developer preview, you will need to generate Sync service
+		instances via API until the Console GUI is available. Using the API key pair you
+		generated above, generate a service instance via REST API with this command:
+
+		```bash
+		curl -X POST https://preview.twilio.com/Sync/Services \
+		 -d 'FriendlyName=MySyncServiceInstance' \
+		 -u 'SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:your_api_secret'
+		```
+
 ### Heroku steps
 
 Now, you are ready to fearlessly Press the Heroku button. This will ask for some variables (see above), create a new Heroku app, and deploy this source code to Heroku.
@@ -42,8 +56,6 @@ You have a new Heroku app, it's live, in the cloud, and free as long as it's run
 It should work to render the HTML, but you will be missing some functionality, such as being able to Dial an external number.
 
 ![TwilioClient](https://uploadir.com/u/qy39txbt "Twilio Client")
-
-
 
 Say the Heroku URL created was:
 
