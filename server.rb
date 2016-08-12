@@ -33,21 +33,16 @@ end
 # Generate a token for use in our app
 get '/token' do
   # Get the user-provided ID for the connecting device
-  puts "In token"
   device_id = params['device']
-  puts device_id
   # Create a random username for the client
   identity = 'twilioTest'
   # Create a unique ID for the currently connecting device
   endpoint_id = "TwilioDemoApp:#{identity}:#{device_id}"
   # Create an Access Token for the app
-  puts endpoint_id
   token = Twilio::Util::AccessToken.new account_sid, api_key, api_secret, 3600, identity
   token.identity = identity
   # Create app grant for out token
-  puts "token created"
   grant = Twilio::Util::AccessToken::SyncGrant.new
-  puts "Grant created"
   grant.service_sid = sync_sid
   grant.endpoint_id = endpoint_id
   token.add_grant grant
@@ -83,21 +78,15 @@ post '/inbound' do
     from = params[:From]
     addOnData = params[:AddOns]
     client = Twilio::REST::Client.new(account_sid, auth_token)
-    # Sending the add on data through the web socket
+    # Sending the add on data through Twilio Sync
     service = client.preview.sync.services(sync_sid)
-    #puts sync_sid
-
-    #response2 = service.documents.create(
-    #  unique_name: "TwilioChannel",
-    #  data: '{ "Test": "Still Testing" }' )
-    #puts response2
-    response2 = service.documents("TwilioChannel").update(data: addOnData)
+    response = service.documents("TwilioChannel").update(data: addOnData)
     # Dials the default_client
-    response = Twilio::TwiML::Response.new do |r|
+    response2 = Twilio::TwiML::Response.new do |r|
         # Should be your Twilio Number or a verified Caller ID
         r.Dial :callerId => from do |d|
             d.Client default_client
         end
     end
-    response.text
+    response2.text
 end
