@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
 gem 'sinatra'
-gem 'twilio-ruby'
-gem 'httparty'
-gem 'pusher'
+gem 'sinatra-contrib'
+gemspec :path => 'twilio-ruby'
