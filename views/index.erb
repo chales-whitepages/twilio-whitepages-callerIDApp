@@ -42,6 +42,8 @@
     var syncDoc;
     // Get an access token for the client, passing a device ID, only one device ID
     $.getJSON('/token', {
+      // Device ID is hardcoded in but can be auto generated with the below function
+      // getDeviceId.
       device: 'test1234'
     }, function(tokenResponse) {
       // Initialize the Sync client
@@ -132,6 +134,7 @@
     //Generate random UUID to identify this browser tab
     //For a more robust solution consider a library like
     //fingerprintjs2: https://github.com/Valve/fingerprintjs2
+    // ****Currently not being used.****
     function getDeviceId() {
       return 'browser-' +
         'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -165,7 +168,8 @@
       <!--div id="addons"><img src="//pro.whitepages.com/wp-content/uploads/2014/09/wp-logo-large.png" width="300px"></img></a></div!-->
 
     </div>
-    <div class="phone">For demo call: <%=caller_id%></div>
+    <%# The below line can be used to display your Twilio phone number %>
+    <!--div class="phone">For demo call: <%=caller_id%> <%# </div!-->
 
     <button class="call" onclick="answer();">
       Answer
