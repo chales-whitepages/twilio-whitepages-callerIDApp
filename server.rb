@@ -78,10 +78,6 @@ post '/inbound' do
     from = params[:From]
     addOnData = params[:AddOns]
     client = Twilio::REST::Client.new(account_sid, auth_token)
-    # YOu might need to create the Sync document
-    # response = service.document.create(
-    #  unique_name: "TwilioChannel"
-    #)
     # Sending the add on data through Twilio Sync
     service = client.preview.sync.services(sync_sid)
     response = service.documents("TwilioChannel").update(data: addOnData)
