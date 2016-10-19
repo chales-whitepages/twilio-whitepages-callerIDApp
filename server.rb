@@ -80,6 +80,7 @@ post '/inbound' do
     client = Twilio::REST::Client.new(account_sid, auth_token)
     # Sending the add on data through Twilio Sync
     service = client.preview.sync.services(sync_sid)
+    puts addOnData
     response = service.documents("TwilioChannel").update(data: addOnData)
     # Dials the default_client
     response2 = Twilio::TwiML::Response.new do |r|
